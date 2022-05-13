@@ -125,16 +125,19 @@ const promptUser = () => {
                             },
                             {
                                 type: 'list',
-                                message: "What is this employee's manager's ID?",
+                                message: "Who is this employee's manager?",
                                 name: 'manager',
-                                choices: fullEmployeeData.map(employee => employee.id)
+                                choices: managers
                             }
                         ]).then((employeeData) => {
                             // TODO: filter employeeData.role to get role id from retVar
                             const roleId = retVar.filter(role => role.title == employeeData.role)[0].id;
-                            console.log(employeeData);
+                            var managerId = fullEmployeeData.filter(obj => {
+                                return `${obj.first_name} ${obj.last_name}` === employeeData.manager
+                            })
+                            console.log(managerId);
                             // TODO: Make call to SQL database to insert employee data
-                            const params = [employeeData.firstName, employeeData.lastName, roleId, employeeData.manager];
+                            const params = [employeeData.firstName, employeeData.lastName, roleId, managerId[0].id];
                             
                             return params;
                         }).then((params) => {
