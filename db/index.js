@@ -20,8 +20,7 @@ class DB {
         return this.connection.promise().query(`SELECT employee.id, employee.first_name, employee.last_name, employee.manager_id, role.title AS job_title, department.name AS department_name, role.salary AS salary
         FROM employee
         JOIN role ON employee.role_id = role.id
-        JOIN department ON role.department_id = department.id`
-        );
+        JOIN department ON role.department_id = department.id`);
     }
 
     addDepartment(department) {
@@ -40,6 +39,11 @@ class DB {
     updateRole(data) {
         return this.connection.promise().query(`UPDATE employee SET role_id = ?
         WHERE id = ?`, data)
+    }
+
+    updateManager(data) {
+        return this.connection.promise().query(`UPDATE employee SET manager_id = ?
+        where id = ?`, data)
     }
 
 }

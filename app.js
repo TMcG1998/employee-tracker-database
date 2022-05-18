@@ -12,7 +12,7 @@ const promptUser = () => {
             type: 'list',
             message: 'What would you like to do?',
             name: 'action',
-            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Exit']
+            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Update employee manager', 'Exit']
         }
     ])
         .then(({ action }) => {
@@ -206,6 +206,51 @@ const promptUser = () => {
                                 console.log("Employee updated.")
                                 repeat();
                             })       
+                        })
+                    })
+            }
+
+            if(action == 'Update employee manager') {
+                var fullEmployeeData = [];
+                var employeesNames = [];
+                var managers = [];
+
+                db.findEmployees()
+                    .then(([rows]) => {
+                        fullEmployeeData = rows;
+                        employeesNames = rows.map(({first_name, last_name}) => ({ first_name, last_name }));
+                        for(let i = 0; i < employeesNames.length; i++) {
+                            managers.push(employeesNames[i].first_name + " " + employeesNames[i].last_name);
+                        }
+                        // console.log(managers, employeesNames, fullEmployeeData);
+                    }).then(() => {
+                        return inquirer.prompt([
+                            {
+                                type: 'list',
+                                message: 'Which employee do you wish to update?',
+                                name: 'employee',
+                                choices: managers
+                            },
+                            {
+                                type: 'list',
+                                message: 'Who is their new manager?',
+                                name: 'manager',
+                                choices: managers
+                            }
+                        ]).then(inquireData => {
+                            var employeeId = fullEmployeeData.filter(obj => {
+                                return `${obj.first_name} ${obj.last_name}` === inquireData.employee
+                            })
+                            var managerId = fullEmployeeData.filter(obj => {
+                                return `${obj.first_name} ${obj.last_name}` === inquireData.manager
+                            })
+
+                            const params = [managerId[0].id, employeeId[0].id];
+                            db.updateManager(params)
+                            .then(() => {
+                                console.log("Updated.");
+                                repeat();
+                            })
                         })
                     })
             }
