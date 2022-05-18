@@ -17,9 +17,10 @@ class DB {
     }
 
     findEmployees() {
-        return this.connection.promise().query(`SELECT employee.id, employee.first_name, employee.last_name, employee.manager_id, role.title AS job_title, department.name AS department_name, role.salary AS salary
-        FROM employee
-        JOIN role ON employee.role_id = role.id
+        return this.connection.promise().query(`SELECT E.id, E.first_name, E.last_name, E.manager_id, role.title AS job_title, department.name AS department_name, role.salary AS salary, 
+        (SELECT first_name from employee WHERE id = E.manager_id) as manager_name
+        FROM employee as E
+        JOIN role ON E.role_id = role.id
         JOIN department ON role.department_id = department.id`);
     }
 

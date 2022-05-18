@@ -256,6 +256,7 @@ const promptUser = () => {
             }
 
             if(action == 'Exit') {
+                db.connection.end();
                 return;
             }
         })
