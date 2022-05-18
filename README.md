@@ -15,7 +15,7 @@
       
   ## Installation
   
-  To install, begin by cloning the code into a desired location on the user's PC. Using command line, navigate into the develop folder. From there, type 'node index' and return/enter. The app will start.      
+  To install, begin by cloning the code into a desired location on the user's PC. Using command line, navigate into the root. From there, type 'node app' and return/enter. The app will start.      
       
   ## Usage
   
