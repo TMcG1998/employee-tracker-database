@@ -21,7 +21,7 @@
   
   The app will prompt the user with a list of available options to choose from. Upon choosing an option, they're then given some more prompts to accept user input based on what it is they're trying to do. If making an update to an employee's role, they'll be provided a list of already existing roles within the database, but if they choose to create a brand new employee, the application will also accept strings during some prompts to collect the appropriate data and add it to the database.
   
-  Video on the usage goes further in depth here
+  Video on the usage goes further in depth [here](https://drive.google.com/file/d/1Mz_pg_ixPtVRI7Ll8_O5GxvhT__wg3JM/view)
   
   ## How to Contribute
       
